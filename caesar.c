@@ -1,4 +1,4 @@
-#include <cs50.h>
+#include <cs50.h> // MADE USING THE CS50 package for user inputs
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,7 +29,6 @@ int main(int argc, string argv[])
         // Otherwise, if all characters are digits, then we turn argv[1] from String to Int and assign the value to KEY
         // It takes the literal String, not ASCII value, and turns it into an Int
         key = atoi(argv[1]);
-        //printf("Key: %i\n", key);
 
         // We prompt the user for Plaintext, but if they don't write anything, ask until they do
         do
@@ -38,10 +37,8 @@ int main(int argc, string argv[])
         }
         while (plaintext[0] == '\0');
 
-        // TODO: Implement cipher here
-        // make for loop with encipher() function
-        //printf("ciphertext: %c\n", ciphertext(encipher(plaintext[i], key), plaintext, key));
-
+        // We make a For loop with the encipher() function
+        // We use the For loop inside 2 printf statements
         printf("ciphertext: ");
         char ciphertext;
         for (int i = 0, len = strlen(plaintext); i < len; i++)
@@ -49,7 +46,6 @@ int main(int argc, string argv[])
             ciphertext = encipher(plaintext[i], key);
             printf("%c", ciphertext);
         }
-        //ciphertext[strlen(plaintext)] = '\0';
         printf("\n");
     }
     // Here is the "else" for the original "if", if argc is not 2, program will not run
@@ -60,29 +56,27 @@ int main(int argc, string argv[])
     }
 }
 
-char encipher(char p, int k)
+char encipher(char p, int key)
 {
-    // The cipher formula: c[i] = (p[i] + k) % 26
+    // The basic cipher formula: c[i] = (p[i] + k) % 26
+    char c; // C is the ciphered letter, P is the plaintext letter
 
-    char c;
-
-    if (k > 25)
+    // We make sure the key value does not go past 26 (total amount of letters)
+    if (key > 25)
     {
-        k = k % 26;
+        key = key % 26;
     }
-
+    
+    // We check each character and encipher it only if it's a letter (Upper or Lower case)
     if (isupper(p))
     {
-        c = (p - 65 + k) % 26 + 65;
+        c = (p - 65 + key) % 26 + 65;
     }
     else if (islower(p))
     {
-        c = (p - 97 + k) % 26 + 97;
+        c = (p - 97 + key) % 26 + 97;
     }
-    else
-    {
-        c = p;
-    }
-
+    
+    // Return the enciphered letter
     return c;
 }
